@@ -1,0 +1,31 @@
+name: blogster
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  flutter_bloc: ^8.1.4
+  fpdart: ^1.1.0
+  supabase_flutter: ^2.3.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
