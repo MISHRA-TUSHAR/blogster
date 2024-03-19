@@ -2,6 +2,7 @@ import 'package:blogster/core/secrets/app_secrets.dart';
 import 'package:blogster/features/auth/data/datasources/auth_supabase_data_source.dart';
 import 'package:blogster/features/auth/data/repos/auth_repo_implementation.dart';
 import 'package:blogster/features/auth/domain/repos/auth_repo.dart';
+import 'package:blogster/features/auth/domain/useCases/user_login.dart';
 import 'package:blogster/features/auth/domain/useCases/user_sign_up.dart';
 import 'package:blogster/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -41,10 +42,18 @@ void _initAuth() {
     ),
   );
 
+  // use cases
+  serviceLocator.registerFactory(
+    () => UserLogin(
+      serviceLocator(),
+    ),
+  );
+
   // bloc
   serviceLocator.registerLazySingleton(
     () => AuthBloc(
       userSignUp: serviceLocator(),
+      userLogin: serviceLocator(),
     ),
   );
 }
