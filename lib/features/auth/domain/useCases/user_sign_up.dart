@@ -1,14 +1,15 @@
 import 'package:blogster/core/errors/failures.dart';
 import 'package:blogster/core/usecase/usecase.dart';
+import 'package:blogster/features/auth/domain/entities/user.dart';
 import 'package:blogster/features/auth/domain/repos/auth_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UserSignUp implements UseCase<String, UserSignUpParams> {
+class UserSignUp implements UseCase<User, UserSignUpParams> {
   final AuthRepository authRepository;
   const UserSignUp(this.authRepository);
 
   @override
-  Future<Either<Failure, String>> call(UserSignUpParams params) async {
+  Future<Either<Failure, User>> call(UserSignUpParams params) async {
     return await authRepository.signUpWithEmailPassword(
       name: params.name,
       email: params.email,
