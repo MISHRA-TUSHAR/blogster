@@ -54,8 +54,9 @@ class _LoginState extends State<Login> {
                 isObscureText: true,
               ),
               const SizedBox(height: 20),
-              const AuthGradientButton(
+              AuthGradientButton(
                 buttonText: 'Sign in',
+                onPressed: () {},
               ),
               const SizedBox(height: 20),
               GestureDetector(
