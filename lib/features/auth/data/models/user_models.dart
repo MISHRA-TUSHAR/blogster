@@ -1,4 +1,4 @@
-import 'package:blogster/features/auth/domain/entities/user.dart';
+import 'package:blogster/core/common/entities/user.dart';
 
 class UserModel extends User {
   UserModel({

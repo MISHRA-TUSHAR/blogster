@@ -15,10 +15,10 @@ class SignUp extends StatefulWidget {
   const SignUp({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<SignUp> createState() => _SignUpPageState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _SignUpPageState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
@@ -48,13 +48,14 @@ class _SignUpState extends State<SignUp> {
             if (state is AuthLoading) {
               return const Loader();
             }
+
             return Form(
               key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Sign Up.",
+                    'Sign Up.',
                     style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
@@ -62,20 +63,23 @@ class _SignUpState extends State<SignUp> {
                   ),
                   const SizedBox(height: 30),
                   AuthField(
-                    hintText: "Name",
+                    hintText: 'Name',
                     controller: nameController,
                   ),
                   const SizedBox(height: 15),
-                  AuthField(hintText: "Email", controller: emailController),
+                  AuthField(
+                    hintText: 'Email',
+                    controller: emailController,
+                  ),
                   const SizedBox(height: 15),
                   AuthField(
-                    hintText: "Password",
+                    hintText: 'Password',
                     controller: passwordController,
                     isObscureText: true,
                   ),
                   const SizedBox(height: 20),
                   AuthGradientButton(
-                    buttonText: 'Sign up',
+                    buttonText: 'Sign Up',
                     onPressed: () {
                       if (formKey.currentState!.validate()) {
                         context.read<AuthBloc>().add(
@@ -91,27 +95,26 @@ class _SignUpState extends State<SignUp> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        Login.route(),
-                      );
+                      Navigator.push(context, Login.route());
                     },
                     child: RichText(
-                        text: TextSpan(
-                      text: "Already have an account?",
-                      style: Theme.of(context).textTheme.titleMedium,
-                      children: List.generate(
-                        1,
-                        (index) => TextSpan(
-                          text: " Login",
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppPallete.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
+                      text: TextSpan(
+                        text: 'Already have an account? ',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        children: [
+                          TextSpan(
+                            text: 'Sign In',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: AppPallete.gradient2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ],
                       ),
-                    )),
+                    ),
                   ),
                 ],
               ),

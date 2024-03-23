@@ -1,7 +1,7 @@
+import 'package:blogster/core/common/entities/user.dart';
 import 'package:blogster/core/errors/exceptions.dart';
 import 'package:blogster/core/errors/failures.dart';
 import 'package:blogster/features/auth/data/datasources/auth_supabase_data_source.dart';
-import 'package:blogster/features/auth/domain/entities/user.dart';
 import 'package:blogster/features/auth/domain/repos/auth_repo.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' as sb;

@@ -1,6 +1,6 @@
 import 'package:blogster/core/errors/failures.dart';
 import 'package:blogster/core/usecase/usecase.dart';
-import 'package:blogster/features/auth/domain/entities/user.dart';
+import 'package:blogster/core/common/entities/user.dart';
 import 'package:blogster/features/auth/domain/repos/auth_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
