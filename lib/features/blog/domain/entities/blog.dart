@@ -16,6 +16,6 @@ class Blog {
     required this.imageUrl,
     required this.topics,
     required this.updatedAt,
-    required this.posterName,
+    this.posterName,
   });
 }
