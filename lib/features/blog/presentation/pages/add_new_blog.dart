@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:blogster/core/common/cubits/app_users/app_user_cubit.dart';
 import 'package:blogster/core/common/widgets/loader.dart';
+import 'package:blogster/core/const/constant.dart';
 import 'package:blogster/core/theme/app_pallete.dart';
 import 'package:blogster/core/utils/pick_image.dart';
 import 'package:blogster/core/utils/show_snackbar.dart';
@@ -24,21 +25,21 @@ class AddNewBlogPage extends StatefulWidget {
 class _AddNewBlogPageState extends State<AddNewBlogPage> {
   final titleController = TextEditingController();
   final contentController = TextEditingController();
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   List<String> selectedTopics = [];
   File? image;
 
   void selectImage() async {
-    final pickedimage = await pickImage();
-    if (pickedimage != null) {
+    final pickedImage = await pickImage();
+    if (pickedImage != null) {
       setState(() {
-        image = pickedimage;
+        image = pickedImage;
       });
     }
   }
 
   void uploadBlog() {
-    if (formkey.currentState!.validate() &&
+    if (formKey.currentState!.validate() &&
         selectedTopics.isNotEmpty &&
         image != null) {
       final posterId =
@@ -71,9 +72,7 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
             onPressed: () {
               uploadBlog();
             },
-            icon: const Icon(
-              Icons.done_rounded,
-            ),
+            icon: const Icon(Icons.done_rounded),
           ),
         ],
       ),
@@ -93,26 +92,28 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
           if (state is BlogLoading) {
             return const Loader();
           }
+
           return SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Form(
-                key: formkey,
+                key: formKey,
                 child: Column(
                   children: [
                     image != null
                         ? GestureDetector(
                             onTap: selectImage,
                             child: SizedBox(
-                                height: 150,
-                                width: double.infinity,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(12),
-                                  child: Image.file(
-                                    image!,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )),
+                              width: double.infinity,
+                              height: 150,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.file(
+                                  image!,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
                           )
                         : GestureDetector(
                             onTap: () {
@@ -120,13 +121,8 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                             },
                             child: DottedBorder(
                               color: AppPallete.borderColor,
-                              dashPattern: const [
-                                15,
-                                4,
-                              ],
-                              radius: const Radius.circular(
-                                12,
-                              ),
+                              dashPattern: const [10, 4],
+                              radius: const Radius.circular(10),
                               borderType: BorderType.RRect,
                               strokeCap: StrokeCap.round,
                               child: Container(
@@ -141,11 +137,11 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                                     ),
                                     SizedBox(height: 15),
                                     Text(
-                                      "Select your image",
+                                      'Select your image',
                                       style: TextStyle(
-                                        fontSize: 20,
+                                        fontSize: 15,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -155,35 +151,22 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
-                        children: [
-                          'Technology',
-                          'Business',
-                          'Programming',
-                          'Entertainment',
-                        ]
+                        children: Constants.topics
                             .map(
                               (e) => Padding(
-                                padding: const EdgeInsets.all(
-                                  5.0,
-                                ),
+                                padding: const EdgeInsets.all(5.0),
                                 child: GestureDetector(
                                   onTap: () {
                                     if (selectedTopics.contains(e)) {
-                                      selectedTopics.remove(
-                                        e,
-                                      );
+                                      selectedTopics.remove(e);
                                     } else {
-                                      selectedTopics.add(
-                                        e,
-                                      );
+                                      selectedTopics.add(e);
                                     }
                                     setState(() {});
                                   },
                                   child: Chip(
                                     label: Text(e),
-                                    color: selectedTopics.contains(
-                                      e,
-                                    )
+                                    color: selectedTopics.contains(e)
                                         ? const MaterialStatePropertyAll(
                                             AppPallete.gradient1,
                                           )
@@ -200,13 +183,16 @@ class _AddNewBlogPageState extends State<AddNewBlogPage> {
                             .toList(),
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    BlogEditor(
-                        controller: titleController, hintText: 'Blog Title'),
                     const SizedBox(height: 10),
                     BlogEditor(
-                        controller: contentController,
-                        hintText: 'Blog Description'),
+                      controller: titleController,
+                      hintText: 'Blog title',
+                    ),
+                    const SizedBox(height: 10),
+                    BlogEditor(
+                      controller: contentController,
+                      hintText: 'Blog content',
+                    ),
                   ],
                 ),
               ),

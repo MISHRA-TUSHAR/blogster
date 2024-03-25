@@ -5,6 +5,7 @@ import 'package:blogster/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:blogster/features/auth/presentation/pages/signup_page.dart';
 import 'package:blogster/features/auth/presentation/widgets/auth_field.dart';
 import 'package:blogster/features/auth/presentation/widgets/auth_gradient_button.dart';
+import 'package:blogster/features/blog/presentation/pages/blog_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,29 +42,39 @@ class _LoginState extends State<Login> {
           listener: (context, state) {
             if (state is AuthFailure) {
               showSnackBar(context, state.message);
+            } else if (state is AuthSuccess) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                BlogPage.route(),
+                (route) => false,
+              );
             }
           },
           builder: (context, state) {
             if (state is AuthLoading) {
               return const Loader();
             }
+
             return Form(
               key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
-                    "Sign In.",
+                    'Sign In.',
                     style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 30),
-                  AuthField(hintText: "Email", controller: emailController),
+                  AuthField(
+                    hintText: 'Email',
+                    controller: emailController,
+                  ),
                   const SizedBox(height: 15),
                   AuthField(
-                    hintText: "Password",
+                    hintText: 'Password',
                     controller: passwordController,
                     isObscureText: true,
                   ),
@@ -84,27 +95,26 @@ class _LoginState extends State<Login> {
                   const SizedBox(height: 20),
                   GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        SignUp.route(),
-                      );
+                      Navigator.push(context, SignUp.route());
                     },
                     child: RichText(
-                        text: TextSpan(
-                      text: "Don't have an account?",
-                      style: Theme.of(context).textTheme.titleMedium,
-                      children: List.generate(
-                        1,
-                        (index) => TextSpan(
-                          text: " Sign Up",
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    color: AppPallete.gradient2,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                        ),
+                      text: TextSpan(
+                        text: 'Don\'t have an account? ',
+                        style: Theme.of(context).textTheme.titleMedium,
+                        children: [
+                          TextSpan(
+                            text: 'Sign Up',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  color: AppPallete.gradient2,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                        ],
                       ),
-                    )),
+                    ),
                   ),
                 ],
               ),
@@ -115,5 +125,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-// 55:00

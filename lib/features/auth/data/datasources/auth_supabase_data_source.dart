@@ -21,7 +21,6 @@ abstract interface class AuthRemoteDataSource {
 class AuthSupabaseDataSourceImpl implements AuthRemoteDataSource {
   final SupabaseClient supabaseClient;
   AuthSupabaseDataSourceImpl(this.supabaseClient);
-
   @override
   Session? get currentUserSession => supabaseClient.auth.currentSession;
 
@@ -32,13 +31,15 @@ class AuthSupabaseDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     try {
       final response = await supabaseClient.auth.signInWithPassword(
-        email: email,
         password: password,
+        email: email,
       );
       if (response.user == null) {
         throw const ServerException('User is null!');
       }
       return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -52,8 +53,8 @@ class AuthSupabaseDataSourceImpl implements AuthRemoteDataSource {
   }) async {
     try {
       final response = await supabaseClient.auth.signUp(
-        email: email,
         password: password,
+        email: email,
         data: {
           'name': name,
         },
@@ -62,6 +63,8 @@ class AuthSupabaseDataSourceImpl implements AuthRemoteDataSource {
         throw const ServerException('User is null!');
       }
       return UserModel.fromJson(response.user!.toJson());
+    } on AuthException catch (e) {
+      throw ServerException(e.message);
     } catch (e) {
       throw ServerException(e.toString());
     }
@@ -79,6 +82,7 @@ class AuthSupabaseDataSourceImpl implements AuthRemoteDataSource {
           email: currentUserSession!.user.email,
         );
       }
+
       return null;
     } catch (e) {
       throw ServerException(e.toString());
