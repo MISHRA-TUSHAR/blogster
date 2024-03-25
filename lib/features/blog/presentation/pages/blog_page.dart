@@ -3,7 +3,7 @@ import 'package:blogster/core/theme/app_pallete.dart';
 import 'package:blogster/core/utils/show_snackbar.dart';
 import 'package:blogster/features/blog/presentation/bloc/blog_bloc.dart';
 import 'package:blogster/features/blog/presentation/pages/add_new_blog.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:blogster/features/blog/presentation/widgets/blog_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +35,7 @@ class _BlogPageState extends State<BlogPage> {
               Navigator.push(context, AddNewBlogPage.route());
             },
             icon: const Icon(
-              CupertinoIcons.add_circled,
+              Icons.add_circle,
             ),
           ),
         ],
@@ -55,12 +55,12 @@ class _BlogPageState extends State<BlogPage> {
               itemCount: state.blogs.length,
               itemBuilder: (context, index) {
                 final blog = state.blogs[index];
-                // return BlogCard(
-                //   blog: blog,
-                //   color: index % 2 == 0
-                //       ? AppPallete.gradient1
-                //       : AppPallete.gradient2,
-                // );
+                return BlogCard(
+                  blog: blog,
+                  color: index % 2 == 0
+                      ? AppPallete.gradient1
+                      : AppPallete.gradient2,
+                );
               },
             );
           }
